@@ -1,41 +1,119 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>{{title}}</title>
-</head>
-<body>
-  <div class="jumbotron">
-  <div class="container">
-    <h1 class="text-center">Notifications</h1>
-    <div class="text-center">
-    {{#if notifications}}
-      <table class="table table-hover table-notifications">
-        {{#each notifications as |notification|}}
-          <tr class="notification{{#if notification.unread}} active{{/if}}">
-            <td class="notification-checkbox"></td>
-            <td class="notification-star"></td>
-            <td class="notification-icon"></td>
-            <td class="notification-subject">
-              <a href="{{notification.web_url}}" target="_blank" class="link">{{notification.subject_title}}</a>
-            </td>
-            <td class="notification-reason">
-              <span class="label label-{{notification.reason}}">{{notification.reason}}</span>
-            </td>
-            <td class="notification-date">
-              <small class="text-muted">{{notification.updated_at}}</small>
-            </td>
-          </tr>
-        {{/each}}
-      </table>
-    {{else}}
-      <div class="blankslate blankslate-spacious blankslate-clean-background">
-        <h3>Nothing to see here</h3>
-      </div>
-    {{/if}}
-    </div>
-  </div>
-</div>
-<script async defer src="https://buttons.github.io/buttons.js"></script>
+  <head>
+    <title>{{title}}</title>
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-</body>
+    <link rel="stylesheet" type="text/css" href="/assets/css/app.css">
+  </head>
+  <body>
+    <div class="header-flash-messages">
+      {{flash}}
+    </div>
+
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#octobox-menu" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <img src="{{user.avatar}}?size=64" width="32" class="img-rounded navbar-avatar">
+          </button>
+          <a class="navbar-brand" href="/">
+            {{{octobox_icon 28}}}
+            Octobox
+          </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse js-octobox-menu" id="octobox-menu">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle hidden-xs" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                <img src="{{user.avatar}}?size=40" width="20" class="img-rounded navbar-avatar">
+                {{ user.github_login }} <span class="caret hidden-xs"></span>
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a href="/logout">
+                    {{{octicon 'sign-out' height=16 class='text-muted'}}}
+                    Logout
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row row-offcanvas row-offcanvas-left">
+        <div class="col-6 col-md-2 sidebar-offcanvas" id="sidebar">
+          {{> sidebar }}
+        </div>
+        <div class="col-12 col-md-10">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h1 class="text-center">Notifications</h1>
+            </div>
+            {{#if notifications}}
+              <table class="table table-hover table-notifications js-table-notifications">
+                {{#each notifications as |notification|}}
+                <tr class="notification{{#if notification.unread}} active{{/if}}">
+                  <td class="notification-checkbox"></td>
+                  <td class="notification-star"></td>
+                  <td class="notification-icon"></td>
+                  <td class="notification-subject">
+                    <a href="{{notification.web_url}}" target="_blank" class="link">{{notification.subject_title}}</a>
+                  </td>
+                  <td class="notification-reason">
+                    <span class="label label-{{notification.reason}}">{{notification.reason}}</span>
+                  </td>
+                  <td class="notification-date">
+                    <small class="text-muted">{{notification.updated_at}}</small>
+                  </td>
+                </tr>
+                {{/each}}
+              </table>
+            {{else}}
+              {{#if (no_url_filter_parameters_present)}}
+                <div class="blankslate blankslate-spacious blankslate-clean-background">
+                  {{{octicon 'mail-read' height=32 class='blankslate-icon'}}}
+                  {{{octicon 'thumbsup' height=32 class='blankslate-icon'}}}
+                  <h3>You're in the clear!</h3>
+                  <p>There are no notifications that need your attention.</p>
+                </div>
+              {{else}}
+                <div class="blankslate blankslate-spacious blankslate-clean-background">
+                  {{{octicon 'mail-read' height=32 class='blankslate-icon'}}}
+                  {{{octicon 'thumbsup' height=32 class='blankslate-icon'}}}
+                <h3>Nothing to see here</h3>
+                <p>You can always try <a href="{{link-to '/notifications'}}">refreshing</a>.</p>
+                </div>
+              {{/if}}
+            {{/if}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+  </body>
 </html>
