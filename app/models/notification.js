@@ -20,8 +20,14 @@ module.exports = function(sequelize, types) {
     unread: types.BOOLEAN,
     last_read_at: types.STRING,
     url: types.STRING,
-    archived: types.BOOLEAN,
-    starred: types.BOOLEAN,
+    archived: {
+      type: types.BOOLEAN,
+      defaultValue: false
+    },
+    starred: {
+      type: types.BOOLEAN,
+      defaultValue: false
+    },
     repository_owner_name: types.STRING
   }, {
     underscored: true,
@@ -95,6 +101,28 @@ module.exports = function(sequelize, types) {
           })
           .catch(cb);
         });
+      }
+    },
+    scopes: {
+      inbox: {where: {archived: false}},
+      archived: {where: {archived: true}},
+      // newest: { order('updated_at DESC') }
+      starred: {where: {starred: true}},
+
+      repo: function(repo_name) {
+        return {where: {repository_full_name: repo_name}};
+      },
+      type: function(subject_type) {
+        return {where: {subject_type: subject_type}};
+      },
+      reason: function(reason) {
+        return {where: {reason: reason}};
+      },
+      status: function(status) {
+        return {where: {unread: status}};
+      },
+      owner: function(owner_name) {
+        return {where: {repository_owner_name: owner_name}};
       }
     }
   });
