@@ -3,41 +3,46 @@
 var extend = require('extend-shallow');
 var define = require('define-property');
 var notifications = require('../lib/notifications');
-var Notification = require('./notification');
 
-function User(config) {
-  if (!(this instanceof User)) {
-    return new User(config);
-  }
-
-  config = extend({}, config);
-  if (!config.github_id) throw new Error('expected "github_id" for the user');
-  if (!config.access_token) throw new Error('expected "access_token" for the user');
-  if (!config.github_login) throw new Error('expected "github_login" for the user');
-
-  this.github_id = config.github_id;
-  this.access_token = config.access_token;
-  this.github_login = config.github_login;
-
-  define(this, 'notifications', {});
-  define(this, 'avatar', {
-    enumerable: true,
-    get: function() {
-      return `https://github.com/${this.github_login}.png`;
+module.exports = function(sequelize, types) {
+  var User = sequelize.define('User', {
+    github_id: {
+      type: types.INTEGER,
+      unique: true
+    },
+    access_token: {
+      type: types.STRING,
+      unique: true
+    },
+    github_login: types.STRING,
+    last_synced_at: types.DATE,
+    next_sync_at: types.DATE
+  }, {
+    underscored: true,
+    getterMethods: {
+      avatar: function() {
+        return `https://github.com/${this.getDataValue('github_login')}.png`;
+      }
+    },
+    classMethods: {
+      associate: function(models) {
+        User.hasMany(models.Notification, {as: 'notifications'});
+      }
+    },
+    instanceMethods: {
+      sync: function(cb) {
+        sequelize.models.Notification.download(this, cb);
+      },
+      downloadNotifications: function(cb) {
+        var options = {
+          lastSynced: this.last_synced_at,
+          nextSync: this.next_sync_at,
+          token: this.access_token
+        };
+        notifications(options, cb);
+      }
     }
   });
-}
 
-User.prototype.sync = function(cb) {
-  Notification.download(this, cb);
+  return User;
 };
-
-User.prototype.downloadNotifications = function(cb) {
-  var options = {
-    lastSynced: this.lastSynced,
-    token: this.access_token
-  };
-  notifications(options, cb);
-};
-
-module.exports = User;
