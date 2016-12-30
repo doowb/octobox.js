@@ -19,8 +19,11 @@ module.exports = function(config) {
 
     return router;
 
-    function handleCreate(req, res) {
-      res.redirect(app.get('root_path'));
+    function handleCreate(req, res, next) {
+      req.user.sync(function(err) {
+        if (err) return next(err);
+        res.redirect(app.get('root_path'));
+      });
     }
 
     function handleDestroy(req, res) {
