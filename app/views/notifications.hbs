@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{{title}}</title>
+</head>
+<body>
+  <div class="jumbotron">
+  <div class="container">
+    <h1 class="text-center">Notifications</h1>
+    <div class="text-center">
+    {{#if notifications}}
+      <table class="table table-hover table-notifications">
+        {{#each notifications as |notification id|}}
+          <tr class="notification{{#if notification.unread}} active{{/if}}">
+            <td class="notification-checkbox"></td>
+            <td class="notification-star"></td>
+            <td class="notification-icon"></td>
+            <td class="notification-subject">
+              <a href="{{notification.web_url}}" target="_blank" class="link">{{notification.subject_title}}</a>
+            </td>
+            <td class="notification-reason">
+              <span class="label label-{{notification.reason}}">{{notification.reason}}</span>
+            </td>
+            <td class="notification-date">
+              <small class="text-muted">{{notification.updated_at}}</small>
+            </td>
+          </tr>
+        {{/each}}
+      </table>
+    {{else}}
+      <div class="blankslate blankslate-spacious blankslate-clean-background">
+        <h3>Nothing to see here</h3>
+      </div>
+    {{/if}}
+    </div>
+  </div>
+</div>
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+</body>
+</html>
