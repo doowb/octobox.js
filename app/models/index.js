@@ -37,16 +37,18 @@ Object.keys(db).forEach(function(modelName) {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-// replace tables and data for development and test databases
-sequelize.sync({
-  force: true,
-  match: /_(development|test)$/
-});
-
-// add new models for production but don't drop data
-sequelize.sync({
-  force: false,
-  match: /^octobox$/
-});
+if (env === 'production') {
+  // add new models for production but don't drop data
+  sequelize.sync({
+    force: false,
+    match: /^octobox$/
+  });
+} else {
+  // replace tables and data for development and test databases
+  sequelize.sync({
+    force: true,
+    match: /_(development|test)$/
+  });
+}
 
 module.exports = db;
