@@ -1,0 +1,86 @@
+<ul class="nav nav-pills nav-stacked nav-filters">
+  <li role="presentation" class="{{#unless (or (boolean @root.params.archived) (boolean @root.params.starred))}}active{{/unless}}">
+    <a href="{{link-to '/notifications'}}">
+      {{{octicon 'inbox' height=16 class='sidebar-icon text-primary'}}}
+      Inbox
+    </a>
+  </li>
+  <li role="presentation" class="{{#if (boolean @root.params.archived)}}active{{/if}}">
+    <a href="{{link-to '/notifications' archived=true}}">
+      {{{octicon 'check' height=16 class='sidebar-icon text-success'}}}
+      Archive
+    </a>
+  </li>
+
+  <li role="presentation" class="{{#if (boolean @root.params.starred)}}active{{/if}}">
+    <a href="{{link-to '/notifications' starred=true}}">
+      {{{octicon 'star' height=16 class='sidebar-icon star-active'}}}
+      Starred
+    </a>
+  </li>
+
+  {{{ menu_separator }}}
+
+  {{#each statuses as |count status|}}
+    <li class="{{#is @root.params.status (str status)}}active{{/is}}">
+      <a href="{{link-to '/notifications' (filtered_params status=status)}}" class="filter">
+        {{#is status "true"}}
+        {{{octicon 'mail' height=16 class='sidebar-icon star-active'}}}
+        Unread
+        {{else}}
+        {{{octicon 'mail-read' height=16 class='sidebar-icon star-active'}}}
+        Read
+        {{/is}}
+        <span class="label label-muted">{{count}}</span>
+      </a>
+    </li>
+  {{/each}}
+  {{#unless (empty statuses)}}{{{ menu_separator }}}{{/unless}}
+
+  {{#each types as |count type|}}
+    <li class="{{#is @root.params.type type}}active{{/is}}">
+      <a href="{{link-to '/notifications' (filtered_params type=type)}}" class="filter">
+        {{#if (notification_icon type)}}
+          {{{octicon (notification_icon type) height=16 class='sidebar-icon star-active'}}}
+        {{else}}
+          <span class="sidebar-icon"></span>
+        {{/if}}
+        {{type}}
+        <span class="label label-muted">{{count}}</span>
+      </a>
+    </li>
+  {{/each}}
+  {{#unless (empty types)}}{{{ menu_separator }}}{{/unless}}
+
+  {{#each reasons as |count reason|}}
+    <li class="{{#is @root.params.reason reason}}active{{/is}}">
+      <a href="{{link-to '/notifications' (filtered_params reason=reason)}}" class="filter">
+        <span class="text-{{reason_label reason}}">
+          {{{octicon 'primitive-dot' height=24 class='sidebar-icon'}}}
+        </span>
+        {{reason}}
+        <span class="label label-muted">{{count}}</span>
+      </a>
+    </li>
+  {{/each}}
+  {{#unless (empty reasons)}}{{{ menu_separator }}}{{/unless}}
+
+  {{#sidenav-repos (sort unread_repositories)}}
+    {{#is @current_owner @repo_owner}}
+    {{else}}
+      <li class="{{#is @root.params.owner @repo_owner}}active{{/is}}">
+        <a href="{{link-to '/notifications' (omit (filtered_params owner=@repo_owner) 'repo')}}" class="filter owner-label">
+          <img src="https://github.com/{{@repo_owner}}.png?size=40" width="20" class="img-rounded sidebar-avatar">
+          {{@repo_owner}}
+        </a>
+      </li>
+    {{/is}}
+    <li class="{{#if (or (is @root.params.repo @repo_name) (is @root.params.owner @repo_owner))}}active{{/if}}">
+      <a href="{{link-to '/notifications' (omit (filtered_params repo=@repo_name) 'owner')}}" class="filter repo-label">
+        {{{octicon 'repo' size=20}}}
+        {{@repo_label}}
+        <span class="label label-muted">{{count}}</span>
+      </a>
+    </li>
+  {{/sidenav-repos}}
+</ul>
