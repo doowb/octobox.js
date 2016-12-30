@@ -5,6 +5,7 @@ var favicon = require('serve-favicon');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var consolidate = require('consolidate');
+consolidate.requires.handlebars = require('handlebars');
 var cookieParser = require('cookie-parser');
 
 var config = require('../config');
@@ -14,6 +15,7 @@ app.set('url', config.url || 'http://localhost:3000');
 app.set('root_path', '/');
 
 // view engine setup
+app.set('handlebars', consolidate.requires.handlebars);
 app.engine('hbs', consolidate.handlebars);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -41,7 +43,7 @@ app.use(function(req, res, next) {
 
 // development error handler
 // will print stacktrace
-if (app.get('env') === 'development') {
+if(app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {
