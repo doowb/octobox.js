@@ -3,7 +3,7 @@
 var express = require('express');
 var passport = require('passport');
 var extend = require('extend-shallow');
-var User = require('../models/user');
+var models = require('../models');
 var GitHubStrategy = require('passport-github2').Strategy;
 
 module.exports = function(config) {
@@ -14,11 +14,16 @@ module.exports = function(config) {
 
   return function(app) {
     passport.serializeUser(function(user, cb) {
-      cb(null, {github_id: user.github_id, github_login: user.github_login, access_token: user.access_token});
+      cb(null, user.id);
     });
 
-    passport.deserializeUser(function(obj, cb) {
-      cb(null, new User(obj));
+    passport.deserializeUser(function(id, cb) {
+      models.User
+        .findById(id)
+        .then(function(user) {
+          cb(null, user);
+        })
+        .catch(cb);
     });
 
     var url = app.get('url');
@@ -29,13 +34,23 @@ module.exports = function(config) {
     };
 
     var strategy = new GitHubStrategy(opts, function(accessToken, refreshToken, profile, cb) {
-      var user = new User({
-        github_id: profile.id,
-        github_login: profile.username,
-        access_token: accessToken
-      });
+      models.User.findOne({where: {github_id: profile.id}})
+      .then(function(user) {
+        if (!user) {
+          user = models.User.build();
+        }
 
-      cb(null, user);
+        user.set({
+          github_id: profile.id,
+          github_login: profile.username,
+          access_token: accessToken
+        });
+        return user.save();
+      })
+      .then(function(user) {
+        cb(null, user);
+      })
+      .catch(cb);
     });
 
     passport.use(strategy);

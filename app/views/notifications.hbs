@@ -10,7 +10,7 @@
     <div class="text-center">
     {{#if notifications}}
       <table class="table table-hover table-notifications">
-        {{#each notifications as |notification id|}}
+        {{#each notifications as |notification|}}
           <tr class="notification{{#if notification.unread}} active{{/if}}">
             <td class="notification-checkbox"></td>
             <td class="notification-star"></td>

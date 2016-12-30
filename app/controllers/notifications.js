@@ -12,10 +12,15 @@ module.exports = function(config) {
       }
       req.user.sync(function(err) {
         if (err) return next(err);
-        res.render('notifications', {
-          title: 'Notifications',
-          notifications: req.user.notifications
-        });
+        req.user
+          .getNotifications()
+          .then(function(notifications) {
+            res.render('notifications', {
+              title: 'Notifications',
+              notifications: notifications
+            });
+          })
+          .catch(next);
       });
     });
 
