@@ -18,7 +18,6 @@ module.exports = function(sequelize, types) {
     last_synced_at: types.DATE,
     next_sync_at: types.DATE
   }, {
-    underscored: true,
     getterMethods: {
       avatar: function() {
         return `https://github.com/${this.getDataValue('github_login')}.png`;
