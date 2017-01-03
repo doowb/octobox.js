@@ -18,6 +18,7 @@ module.exports = function(sequelize, types) {
     subject_type: types.STRING,
     reason: types.STRING,
     unread: types.BOOLEAN,
+    updated_at: types.DATE,
     last_read_at: types.STRING,
     url: types.STRING,
     archived: {
@@ -30,10 +31,9 @@ module.exports = function(sequelize, types) {
     },
     repository_owner_name: types.STRING
   }, {
-    underscored: true,
     getterMethods: {
       web_url: function() {
-        return this.subject_url
+        return (this.subject_url || '')
           .replace(`${githubapi}/repos`, githuburl)
           .replace('/pulls/', '/pull/')
           .replace('/commits/', '/commit/');
@@ -59,7 +59,7 @@ module.exports = function(sequelize, types) {
               var notification = notifications[i];
               var result = yield Notification.findOrInitialize({
                 where: {
-                  user_id: user.id,
+                  UserId: user.id,
                   github_id: notification.id
                 }
               });
@@ -90,10 +90,11 @@ module.exports = function(sequelize, types) {
             }
 
             user.last_synced_at = +timestamp;
-            if (res && res.headers && res.headers['x-polling-delay']) {
-              var delay = res.headers['x-polling-delay'];
-              user.next_sync_at = +timestamp.clone().add(delay, 'seconds');
+            var delay = 60;
+            if (res && res.headers && res.headers['x-poll-interval']) {
+              delay = res.headers['x-poll-interval'];
             }
+            user.next_sync_at = +timestamp.clone().add(delay, 'seconds');
             yield user.save();
           })
           .then(function() {
@@ -106,7 +107,7 @@ module.exports = function(sequelize, types) {
     scopes: {
       inbox: {where: {archived: false}},
       archived: {where: {archived: true}},
-      // newest: { order('updated_at DESC') }
+      newest: {order: 'updated_at DESC'},
       starred: {where: {starred: true}},
 
       repo: function(repo_name) {
