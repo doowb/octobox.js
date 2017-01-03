@@ -1,0 +1,25 @@
+<ul class="pagination">
+  {{#is first page}}
+  <li class="disabled">
+    <span>Previous</span>
+  </li>
+  {{else}}
+  <li>
+    <a rel="previous" href="{{link-to '/notifications' (filtered_params page=previous)}}">Previous</a>
+  </li>
+  {{/is}}
+  {{#each pages as |page|}}
+  <li{{#is ../page page.page_num}} class="active"{{/is}}>
+    <a href="{{link-to '/notifications' (filtered_params page=page.page_num)}}">{{page.page_num}}</a>
+  </li>
+  {{/each}}
+  {{#is last page}}
+  <li class="disabled">
+    <span>Next</span>
+  </li>
+  {{else}}
+  <li>
+    <a rel="next" href="{{link-to '/notifications' (filtered_params page=next)}}">Next</a>
+  </li>
+  {{/is}}
+</ul>
