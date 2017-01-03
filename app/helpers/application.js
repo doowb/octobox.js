@@ -1,6 +1,7 @@
 'use strict';
 
 var url = require('url');
+var Engine = require('engine');
 var omit = require('object.omit');
 var octicons = require('octicons');
 var extend = require('extend-shallow');
@@ -156,5 +157,15 @@ module.exports = function(app, params) {
       arr = tmp;
     }
     return arr;
+  });
+
+  handlebars.registerHelper('inject', function(str, locals, options) {
+    if (typeof options === 'undefined') {
+      options = locals;
+      locals = {};
+    }
+    var context = extend({}, this, locals, options.hash);
+    var engine = new Engine();
+    return engine.compile(str)(context);
   });
 };
