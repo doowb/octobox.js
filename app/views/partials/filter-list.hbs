@@ -1,0 +1,42 @@
+{{#if (any_active_filters)}}
+  <span class="filter-options">
+    <span class="btn-group">
+      <a href="#" class="btn btn-default filter-label" role="button" aria-disabled="true">Filter:</a>
+
+      {{#if filters.reason}}
+        <a href="{{link-to '/notifications' (omit filters 'reason')}}" class="btn btn-default">
+          {{{octicon 'x' height=16}}}
+          {{params.reason}}
+        </a>
+      {{/if}}
+
+      {{#if filters.status}}
+        <a href="{{link-to '/notifications' (omit filters 'status')}}" class="btn btn-default">
+          {{{octicon 'x' height=16}}}
+          {{#is params.status 'true'}}Unread{{else}}Read{{/is}}
+        </a>
+      {{/if}}
+
+      {{#if filters.repo}}
+        <a href="{{link-to '/notifications' (omit filters 'repo')}}" class="btn btn-default">
+          {{{octicon 'x' height=16}}}
+          {{params.repo}}
+        </a>
+      {{/if}}
+
+      {{#if filters.type}}
+        <a href="{{link-to '/notifications' (omit filters 'type')}}" class="btn btn-default">
+          {{{octicon 'x' height=16}}}
+          {{params.type}}
+        </a>
+      {{/if}}
+
+      {{#if filters.owner}}
+        <a href="{{link-to '/notifications' (omit filters 'owner')}}" class="btn btn-default">
+          {{{octicon 'x' height=16}}}
+          {{params.owner}}
+        </a>
+      {{/if}}
+    </span>
+  </span>
+{{/if}}
