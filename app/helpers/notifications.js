@@ -12,7 +12,7 @@ module.exports = function(app, params) {
 
   handlebars.registerHelper('any_active_filters', function() {
     return ['status', 'reason', 'type', 'repo', 'owner'].filter(function(filter) {
-      return params.hasOwnProperty(filter);
+      return filters.hasOwnProperty(filter);
     }).length !== 0;
   });
 
