@@ -11,7 +11,7 @@ module.exports = function(config) {
         return;
       }
 
-      res.render('home', {title: 'Node Octobox'});
+      res.render('home', {title: 'Octobox.js'});
     });
 
     router.get('/login', function(req, res) {

@@ -36,7 +36,7 @@ module.exports = function(config) {
 
       co(function*() {
         var context = {
-          title: 'Notifications',
+          title: 'Octobox.js',
           pagination_intervals: [20, 40, 60, 80, 100],
           user: req.user,
           partials: getPartials(app),
