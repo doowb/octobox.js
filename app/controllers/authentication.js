@@ -3,11 +3,11 @@
 var express = require('express');
 var passport = require('passport');
 var extend = require('extend-shallow');
-var models = require('../models');
 var GitHubStrategy = require('passport-github2').Strategy;
 
 module.exports = function(config) {
   config = extend({}, config);
+  var models = require('../models')(config);
 
   var GITHUB_CLIENT_ID = config.GITHUB_CLIENT_ID;
   var GITHUB_CLIENT_SECRET = config.GITHUB_CLIENT_SECRET;

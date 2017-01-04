@@ -5,10 +5,10 @@ var co = require('co');
 var path = require('path');
 var qs = require('querystring');
 var express = require('express');
-var models = require('../models');
 var helpers = require('../helpers');
 
 module.exports = function(config) {
+  var models = require('../models')(config);
   return function(app) {
     var router = express.Router();
     router.get('/', function(req, res, next) {
