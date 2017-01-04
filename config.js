@@ -24,9 +24,9 @@ if (exists('./db/config.json')) {
 
 config.env = process.env.NODE_ENV || 'development';
 config = extend({
-  'url': 'http://localhost:3000',
-  'GITHUB_CLIENT_ID': process.env.GITHUB_CLIENT_ID || '',
-  'GITHUB_CLIENT_SECRET': process.env.GITHUB_CLIENT_SECRET || '',
+  url: process.env.URL || 'http://localhost:3000',
+  GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID || '',
+  GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET || '',
   db: db[config.env] || db
 }, config);
 
