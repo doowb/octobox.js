@@ -1,5 +1,6 @@
 'use strict';
 
+var co = require('co');
 var express = require('express');
 var passport = require('passport');
 var extend = require('extend-shallow');
@@ -34,18 +35,13 @@ module.exports = function(config) {
     };
 
     var strategy = new GitHubStrategy(opts, function(accessToken, refreshToken, profile, cb) {
-      models.User.findOne({where: {github_id: profile.id}})
-      .then(function(user) {
-        if (!user) {
-          user = models.User.build();
-        }
+      co(function*() {
+        var result = yield models.User
+          .findOrInitialize({where: {github_id: profile.id}});
 
-        user.set({
-          github_id: profile.id,
-          github_login: profile.username,
-          access_token: accessToken
-        });
-        return user.save();
+        var user = result[0];
+        user.set({github_id: profile.id, github_login: profile.username, access_token: accessToken});
+        return yield user.save();
       })
       .then(function(user) {
         cb(null, user);
