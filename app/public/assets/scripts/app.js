@@ -42,13 +42,13 @@ $(function() {
   $('a[data-method="post"]').click(function(e) {
     e.preventDefault();
     var link = $(this);
-    link.toggleClass('spinning');
+    link.find('.octicon').toggleClass('spinning');
     $.ajax({
       url: link[0].href,
       type: 'json',
       method: 'POST',
       success: function() {
-        link.toggleClass('spinning');
+        link.find('.octicon').toggleClass('spinning');
         window.location = '/notifications';
       },
       error: function() {
