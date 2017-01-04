@@ -1,10 +1,5 @@
 #!/usr/bin/env node
 
-var extend = require('extend-shallow');
 var config = require('../config');
 var server = require('../server');
-var db = require('../db/config.json');
-
-config.env = process.env.NODE_ENV || 'development';
-config = extend({db: db[config.env]}, config);
 server(config);
