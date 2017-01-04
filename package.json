@@ -10,10 +10,17 @@
   },
   "license": "MIT",
   "files": [
-    "index.js",
-    "LICENSE"
+    "bin",
+    "app",
+    "db",
+    "LICENSE",
+    "README.md",
+    "server.js"
   ],
-  "main": "index.js",
+  "main": "server.js",
+  "bin": {
+    "node-octobox": "bin/www"
+  },
   "engines": {
     "node": ">=0.10.0"
   },
@@ -21,9 +28,6 @@
     "start": "node ./bin/www",
     "test": "mocha"
   },
-  "keywords": [
-    "generategenerator"
-  ],
   "dependencies": {
     "body-parser": "^1.15.2",
     "co": "^4.6.0",
