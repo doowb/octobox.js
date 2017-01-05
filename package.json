@@ -55,7 +55,34 @@
     "serve-favicon": "^2.3.2"
   },
   "devDependencies": {
+    "gulp-format-md": "^0.1.11",
     "sequelize-cli": "^2.5.1",
     "umzug": "^1.11.0"
+  },
+  "verb": {
+    "reflinks": [
+      "assemble",
+      "express",
+      "generate",
+      "handlebars",
+      "helper-octicon",
+      "sequelize",
+      "verb",
+      "verb-generate-readme"
+    ],
+    "toc": "collapsible",
+    "layout": "empty",
+    "tasks": [
+      "readme"
+    ],
+    "plugins": [
+      "gulp-format-md"
+    ],
+    "lint": {
+      "reflinks": true
+    },
+    "related": {
+      "list": []
+    }
   }
 }
