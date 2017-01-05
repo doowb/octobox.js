@@ -3,7 +3,7 @@
 var url = require('url');
 var Engine = require('engine');
 var omit = require('object.omit');
-var octicons = require('octicons');
+var octicon = require('helper-octicon');
 var extend = require('extend-shallow');
 var createFrame = require('create-frame');
 
@@ -67,12 +67,7 @@ module.exports = function(app, params) {
     return url.format({pathname: pathname, query: q});
   });
 
-  handlebars.registerHelper('octicon', function(name, options) {
-    var opts = extend({}, options.hash);
-    if (!octicons[name]) return '';
-    return octicons[name].toSVG(opts);
-  });
-
+  handlebars.registerHelper('octicon', octicon);
   handlebars.registerHelper('is', function(a, b, options) {
     var res = (a == b);
     if (options.fn) {
