@@ -2,11 +2,11 @@
   "name": "octobox.js",
   "description": "Port of octobox to node.js",
   "version": "0.1.0",
-  "homepage": "https://github.com/doowb/octobox.js",
+  "homepage": "https://github.com/sellside/octobox.js",
   "author": "Brian Woodward (https://github.com/doowb)",
-  "repository": "doowb/octobox.js",
+  "repository": "sellside/octobox.js",
   "bugs": {
-    "url": "https://github.com/doowb/octobox.js/issues"
+    "url": "https://github.com/sellside/octobox.js/issues"
   },
   "license": "MIT",
   "files": [
