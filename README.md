@@ -1,17 +1,17 @@
-# node-octobox [![NPM version](https://badge.fury.io/js/node-octobox.svg)](https://npmjs.org/package/node-octobox) [![Build Status](https://travis-ci.org/doowb/node-octobox.svg?branch=master)](https://travis-ci.org/doowb/node-octobox)
+# octobox.js [![NPM version](https://badge.fury.io/js/octobox.js.svg)](https://npmjs.org/package/octobox.js) [![Build Status](https://travis-ci.org/doowb/octobox.js.svg?branch=master)](https://travis-ci.org/doowb/octobox.js)
 
 > Port of octobox to node.js
 
 ## Installation
 
 ```sh
-$ npm install --save node-octobox
+$ npm install --save octobox.js
 ```
 
 ## Usage
 
 ```js
-var nodeOctobox = require('node-octobox');
+var nodeOctobox = require('octobox.js');
 nodeOctobox();
 ```
 

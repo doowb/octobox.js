@@ -1,6 +1,6 @@
 'use strict';
 
-var debug = require('debug')('node-octobox:server');
+var debug = require('debug')('octobox.js:server');
 var extend = require('extend-shallow');
 
 module.exports = function(config) {
