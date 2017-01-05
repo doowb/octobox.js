@@ -30,4 +30,12 @@ config = extend({
   db: db[config.env] || db
 }, config);
 
+if (process.env.GA_TRACKING_ID) {
+  if (!config.ga) {
+    config.ga = {trackingId: process.env.GA_TRACKING_ID};
+  } else {
+    config.ga.trackingId = process.env.GA_TRACKING_ID || config.ga.trackingId;
+  }
+}
+
 module.exports = config;

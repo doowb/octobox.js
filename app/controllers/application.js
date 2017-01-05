@@ -1,5 +1,7 @@
 'use strict';
 
+var fs = require('fs');
+var path = require('path');
 var express = require('express');
 
 module.exports = function(config) {
@@ -11,7 +13,10 @@ module.exports = function(config) {
         return;
       }
 
-      res.render('home', {title: 'Octobox.js'});
+      res.render('home', {
+        title: 'Octobox.js',
+        partials: getPartials(app)
+      });
     });
 
     router.get('/login', function(req, res) {
@@ -24,4 +29,15 @@ module.exports = function(config) {
 
     return router;
   };
+};
+
+function getPartials(app) {
+  var partials = fs.readdirSync(path.join(app.get('views'), 'partials'));
+  return partials.reduce(function(acc, filename) {
+    var ext = path.extname(filename);
+    var basename = path.basename(filename, ext);
+    acc[basename] = path.join('partials', basename);
+    return acc;
+  }, {});
 }
+

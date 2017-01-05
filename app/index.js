@@ -1,6 +1,7 @@
 var path = require('path');
 var logger = require('morgan');
 var express = require('express');
+var extend = require('extend-shallow');
 var favicon = require('serve-favicon');
 var bodyParser = require('body-parser');
 var session = require('express-session');
@@ -19,6 +20,10 @@ module.exports = function(config) {
   app.engine('hbs', consolidate.handlebars);
   app.set('views', path.join(__dirname, 'views'));
   app.set('view engine', 'hbs');
+
+  if (config.ga) {
+    app.locals.ga = extend({}, config.ga);
+  }
 
   // uncomment after placing your favicon in /public
   //app.use(favicon(__dirname + '/public/favicon.ico'));
