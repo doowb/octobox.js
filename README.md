@@ -26,7 +26,7 @@
 
 ## Motivation
 
-This is a port of [Octobox][https://github.com/octobox/octobox] from Ruby to JavaScript using [express](http://expressjs.com/), [sequelize](https://github.com/sequelize/sequelize), and [handlebars](http://www.handlebarsjs.com/) instead of Rails, ActiveDirectory, and erb.
+This is a port of [Octobox](https://github.com/octobox/octobox) from Ruby to JavaScript using [express](http://expressjs.com/), [sequelize](https://github.com/sequelize/sequelize), and [handlebars](http://www.handlebarsjs.com/) instead of Rails, ActiveDirectory, and erb.
 
 The goal is to learn more about the pieces of Rails and ActiveDirectory that are missing from Node.js and fill the gap by using other tools like [assemble](https://github.com/assemble/assemble) and [generate](https://github.com/generate/generate) and by creating missing tools like [helper-octicon](https://github.com/helpers/helper-octicon).
 
