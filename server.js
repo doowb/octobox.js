@@ -5,7 +5,7 @@ var extend = require('extend-shallow');
 
 module.exports = function(config) {
   config = extend({port: '3000'}, config);
-  var app = require('./app')(config);
+  var app = require('./app/')(config);
   var http = require('http');
 
   /**

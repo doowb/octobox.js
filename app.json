@@ -1,0 +1,21 @@
+{
+  "name": "Octobox.js",
+  "description": "Take back control of your GitHub Notifications",
+  "repository": "https://github.com/sellside/octobox.js",
+  "env": {
+    "GITHUB_CLIENT_ID": {
+      "description": "The GitHub Application Client ID",
+      "required": true
+    },
+    "GITHUB_CLIENT_SECRET": {
+      "description": "The GitHub Application Client Secret",
+      "required": true
+    },
+    "GA_TRACKING_ID": {
+      "description": "Google Analytics tracking ID. This will include Google Analytics scripts in each page."
+    }
+  },
+  "addons": [
+    "heroku-postgresql"
+  ]
+}
