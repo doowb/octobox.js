@@ -27,6 +27,15 @@ module.exports = function(config) {
       res.redirect('/sessions/destroy');
     });
 
+    if (config.letsencrypt) {
+      // only send this value back if the let's encrypt ssl certifications have been configured
+      router.get('/.well-known/acme-challenge/:key', function(req, res, next) {
+        var key = req.params.key;
+        if (!key) return next();
+        if (key !== config.letsencrypt.key) return next();
+        res.send(config.letsencrypt.value);
+      });
+    }
     return router;
   };
 };

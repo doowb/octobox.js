@@ -38,4 +38,16 @@ if (process.env.GA_TRACKING_ID) {
   }
 }
 
+if (process.env.LETSENCRYPT_KEY && process.env.LETSENCRYPT_VALUE) {
+  if (!config.letsencrypt) {
+    config.letsencrypt = {
+      key: process.env.LETSENCRYPT_KEY,
+      value: process.env.LETSENCRYPT_VALUE
+    };
+  } else {
+    config.letsencrypt.key = process.env.LETSENCRYPT_KEY || config.letsencrypt.key;
+    config.letsencrypt.value = process.env.LETSENCRYPT_VALUE || config.letsencrypt.value;
+  }
+}
+
 module.exports = config;
