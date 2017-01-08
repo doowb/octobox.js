@@ -125,6 +125,7 @@ module.exports = function(app, params) {
       var repo_owner = segs[0];
       var repo_label = segs[1];
       frame.extend({
+        count: count,
         repo_name: repo_name,
         repo_owner: repo_owner,
         repo_label: repo_label,
