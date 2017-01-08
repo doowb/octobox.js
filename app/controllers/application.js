@@ -32,8 +32,10 @@ module.exports = function(config) {
       router.get('/.well-known/acme-challenge/:key', function(req, res, next) {
         var key = req.params.key;
         if (!key) return next();
-        if (key !== config.letsencrypt.key) return next();
-        res.send(config.letsencrypt.value);
+        var keys = config.letsencrypt.key.split(',');
+        var idx = keys.indexOf(key);
+        if (idx === -1) return next();
+        res.send(config.letsencrypt.value.split(',')[idx]);
       });
     }
     return router;
