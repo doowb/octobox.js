@@ -82,7 +82,15 @@
       "reflinks": true
     },
     "related": {
-      "list": []
+      "list": [
+        "assemble",
+        "generate",
+        "update",
+        "verb",
+        "helper-octicon",
+        "express",
+        "sequelize"
+      ]
     }
   }
 }
