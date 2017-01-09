@@ -12,6 +12,8 @@ var cookieParser = require('cookie-parser');
 module.exports = function(config) {
   var app = express();
 
+  // allow checking if the protocol was https or not on heroku
+  app.enable('trust proxy');
   app.set('url', config.url || 'http://localhost:3000');
   app.set('root_path', '/');
 
@@ -33,6 +35,16 @@ module.exports = function(config) {
   app.use(cookieParser());
   app.use(session({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
   app.use(express.static(path.join(__dirname, 'public')));
+
+  app.use(function(req, res, next) {
+    if (req.hostname === 'localhost') {
+      return next();
+    }
+    if(req.headers["x-forwarded-proto"] === "https"){
+      return next();
+    };
+    res.redirect('https://'+req.hostname+req.url);
+  });
 
   var routes = require('./routes')(config);
   routes(app);
