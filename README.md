@@ -2,6 +2,8 @@
 
 > Port of octobox to node.js
 
+[![octobox.js demo](docs/demo.png)](https://octoboxjs.io)
+
 ## Table of Contents
 
 <details>
