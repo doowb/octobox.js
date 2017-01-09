@@ -56,7 +56,7 @@ Optionally, you may set a Google Analytics Tracking ID that will place the Googl
 
 ## Development
 
-The source code is hosted at [GitHub](https://github.com/sellside/octobox.js).
+The source code is hosted at [GitHub](https://github.com/doowb/octobox.js).
 
 ### Getting started
 
@@ -65,7 +65,7 @@ Since this is a port to Node.js, you'll need [Node.js](https://nodejs.org) and [
 Once you have Node.js installed, git clone the repository:
 
 ```sh
-$ git clone https://github.com/sellside/octobox.js.git
+$ git clone https://github.com/doowb/octobox.js.git
 ```
 
 Then install the npm dependencies:

@@ -1,7 +1,7 @@
 {
   "name": "Octobox.js",
   "description": "Take back control of your GitHub Notifications",
-  "repository": "https://github.com/sellside/octobox.js",
+  "repository": "https://github.com/doowb/octobox.js",
   "env": {
     "URL": {
       "description": "Base URL for the site being created. Example: https://octoboxjs.herokuapp.com",
