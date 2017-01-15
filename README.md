@@ -224,7 +224,7 @@ $ npm install -d && npm test
 ### License
 
 Copyright © 2017, [Brian Woodward](https://github.com/doowb).
-Released under the [MIT license](LICENSE).
+Released under the [AGPL-3.0 license](LICENSE).
 
 ***
 

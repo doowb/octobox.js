@@ -8,7 +8,7 @@
   "bugs": {
     "url": "https://github.com/doowb/octobox.js/issues"
   },
-  "license": "MIT",
+  "license": "AGPL-3.0",
   "files": [
     "bin",
     "app",
