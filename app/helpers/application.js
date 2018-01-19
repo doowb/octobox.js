@@ -20,6 +20,7 @@ module.exports = function(app, params) {
   };
 
   const SUBJECT_TYPES = {
+    'RepositoryVulnerabilityAlert': 'key',
     'RepositoryInvitation': 'mail-read',
     'Issue': 'issue-opened',
     'PullRequest': 'git-pull-request',
