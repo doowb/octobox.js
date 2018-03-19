@@ -74,7 +74,7 @@ module.exports = function(sequelize, types) {
                 repository_id: notification.repository.id,
                 repository_full_name: notification.repository.full_name,
                 repository_owner_name: notification.repository.owner.login,
-                subject_title: notification.subject.title,
+                subject_title: notification.subject.title.slice(0, 255),
                 subject_type: notification.subject.type,
                 reason: notification.reason,
                 unread: notification.unread,
